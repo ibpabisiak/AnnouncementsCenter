@@ -8,18 +8,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AddAnnouncementRequest {
+public class AnnouncementRequest {
 
     @NotEmpty
     private String title;
     @NotEmpty
     private String description;
     @NotEmpty
-    private int price;
+    private String advertiserName;
     @NotEmpty
     private String phoneNumber;
-    @NotEmpty
-    private String advertiserName;
     @NotEmpty
     private String email;
 }

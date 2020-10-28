@@ -2,7 +2,7 @@ package com.ac.announcement.service;
 
 import com.ac.announcement.entity.AnnouncementEntity;
 import com.ac.announcement.repository.AnnouncementRepository;
-import com.ac.announcement.request.AddAnnouncementRequest;
+import com.ac.announcement.request.AnnouncementRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,13 +14,8 @@ public class AnnouncementService {
 
     private final AnnouncementRepository announcementRepository;
 
-    public AnnouncementEntity addNewAnnouncement(AddAnnouncementRequest addAnnouncementRequest) {
-        AnnouncementEntity announcementEntity = new AnnouncementEntity();
-        announcementEntity.setTitle(addAnnouncementRequest.getTitle());
-        announcementEntity.setAdvertiserName(addAnnouncementRequest.getAdvertiserName());
-        announcementEntity.setDescription(addAnnouncementRequest.getDescription());
-        announcementEntity.setEmail(addAnnouncementRequest.getEmail());
-        return announcementRepository.save(announcementEntity);
+    public AnnouncementEntity addNewAnnouncement(AnnouncementRequest announcementRequest) {
+        return announcementRepository.save(new AnnouncementEntity(announcementRequest));
     }
 
     public Iterable<AnnouncementEntity> getAll() {

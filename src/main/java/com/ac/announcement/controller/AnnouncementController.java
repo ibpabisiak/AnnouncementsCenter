@@ -1,7 +1,7 @@
 package com.ac.announcement.controller;
 
 import com.ac.announcement.entity.AnnouncementEntity;
-import com.ac.announcement.request.AddAnnouncementRequest;
+import com.ac.announcement.request.AnnouncementRequest;
 import com.ac.announcement.service.AnnouncementService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -45,8 +45,8 @@ public class AnnouncementController {
         )
     })
     @PostMapping
-    public ResponseEntity<AnnouncementEntity> add(@RequestBody AddAnnouncementRequest addAnnouncementRequest) {
-        return ResponseEntity.ok(announcementService.addNewAnnouncement(addAnnouncementRequest));
+    public ResponseEntity<AnnouncementEntity> add(@RequestBody AnnouncementRequest announcementRequest) {
+        return ResponseEntity.ok(announcementService.addNewAnnouncement(announcementRequest));
     }
 
     @Operation(summary = "Return all announcements in database")
