@@ -8,7 +8,10 @@ public class AnnouncementService {
 
     public void addNewAnnouncement(AddAnnouncementRequest addAnnouncementRequest) {
         //TODO
-        System.err.println("hi world");
+        System.err.println("lombok test: " + addAnnouncementRequest.getTitle());
+        System.err.println("lombok test: " + addAnnouncementRequest.getDescription());
+        System.err.println("lombok test: " + addAnnouncementRequest.getPhoneNumber());
+        System.err.println("lombok test: " + addAnnouncementRequest.getTitle());
     }
 
 }
