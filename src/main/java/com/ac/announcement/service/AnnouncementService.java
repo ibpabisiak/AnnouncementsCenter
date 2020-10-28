@@ -28,19 +28,19 @@ public class AnnouncementService {
     }
 
     public AnnouncementEntity update(AnnouncementRequest announcementRequest) {
-        log.info("Loading announcement with following id from database: {}", announcementRequest.getUuid());
+        log.info("Loading announcement with following id from database: {}", announcementRequest.getId());
         Optional<AnnouncementEntity> announcementEntity = announcementRepository
-            .findById(announcementRequest.getUuid());
+            .findById(announcementRequest.getId());
 
         if (!announcementEntity.isPresent()) {
             //TODO implement error handling
-            log.error("Announcement with following id doesn't exist in database: {}", announcementRequest.getUuid());
+            log.error("Announcement with following id doesn't exist in database: {}", announcementRequest.getId());
 
             //TODO throw exception instead of return null
             return null;
         }
 
-        log.info("Update announcement with following id: {}", announcementRequest.getUuid());
+        log.info("Update announcement with following id: {}", announcementRequest.getId());
         announcementEntity.get().fromRequest(announcementRequest);
         return announcementRepository.save(announcementEntity.get());
     }

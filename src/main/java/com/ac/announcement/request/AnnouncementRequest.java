@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AnnouncementRequest {
 
-    private UUID uuid;
+    private UUID id;
     @NotEmpty
     private String title;
     @NotEmpty
