@@ -1,5 +1,6 @@
 package com.ac.announcement.request;
 
+import java.util.UUID;
 import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AnnouncementRequest {
 
+    private UUID uuid;
     @NotEmpty
     private String title;
     @NotEmpty
