@@ -1,5 +1,5 @@
 package com.ac.announcement.request;
 
-public class AddAnnoucementRequest {
+public class AddAnnouncementRequest {
 
 }

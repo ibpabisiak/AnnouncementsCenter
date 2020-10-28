@@ -1,6 +1,6 @@
 package com.ac.announcement.controller;
 
-import com.ac.announcement.request.AddAnnoucementRequest;
+import com.ac.announcement.request.AddAnnouncementRequest;
 import com.ac.announcement.service.AnnouncementService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -42,8 +42,8 @@ public class AnnouncementController {
         )
     })
     @PostMapping
-    public void add(@RequestBody AddAnnoucementRequest addAnnoucementRequest) {
-        announcementService.addNewAnnouncement(addAnnoucementRequest);
+    public void add(@RequestBody AddAnnouncementRequest addAnnouncementRequest) {
+        announcementService.addNewAnnouncement(addAnnouncementRequest);
     }
 
 }
