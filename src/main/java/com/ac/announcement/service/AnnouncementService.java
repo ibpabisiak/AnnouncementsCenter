@@ -1,8 +1,8 @@
 package com.ac.announcement.service;
 
+import com.ac.announcement.dto.AnnouncementDto;
 import com.ac.announcement.entity.AnnouncementEntity;
 import com.ac.announcement.repository.AnnouncementRepository;
-import com.ac.announcement.request.AnnouncementRequest;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,11 +15,11 @@ public class AnnouncementService {
 
     private final AnnouncementRepository announcementRepository;
 
-    public AnnouncementEntity addNewAnnouncement(AnnouncementRequest announcementRequest) {
+    public AnnouncementEntity addNewAnnouncement(AnnouncementDto announcementDto) {
         //TODO upload pictures
         log.info("Adding a new announcement into database: Title {}, User email: {}, User name: {}",
-            announcementRequest.getTitle(), announcementRequest.getEmail(), announcementRequest.getAdvertiserName());
-        return announcementRepository.save(new AnnouncementEntity(announcementRequest));
+            announcementDto.getTitle(), announcementDto.getEmail(), announcementDto.getAdvertiserName());
+        return announcementRepository.save(new AnnouncementEntity(announcementDto));
     }
 
     public Iterable<AnnouncementEntity> getAll() {
@@ -27,21 +27,21 @@ public class AnnouncementService {
         return announcementRepository.findAll();
     }
 
-    public AnnouncementEntity update(AnnouncementRequest announcementRequest) {
-        log.info("Loading announcement with following id from database: {}", announcementRequest.getId());
+    public AnnouncementEntity update(AnnouncementDto announcementDto) {
+        log.info("Loading announcement with following id from database: {}", announcementDto.getId());
         Optional<AnnouncementEntity> announcementEntity = announcementRepository
-            .findById(announcementRequest.getId());
+            .findById(announcementDto.getId());
 
         if (!announcementEntity.isPresent()) {
             //TODO implement error handling
-            log.error("Announcement with following id doesn't exist in database: {}", announcementRequest.getId());
+            log.error("Announcement with following id doesn't exist in database: {}", announcementDto.getId());
 
             //TODO throw exception instead of return null
             return null;
         }
 
-        log.info("Update announcement with following id: {}", announcementRequest.getId());
-        announcementEntity.get().fromRequest(announcementRequest);
+        log.info("Update announcement with following id: {}", announcementDto.getId());
+        announcementEntity.get().fromDto(announcementDto);
         return announcementRepository.save(announcementEntity.get());
     }
 

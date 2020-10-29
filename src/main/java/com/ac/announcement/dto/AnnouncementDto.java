@@ -1,4 +1,4 @@
-package com.ac.announcement.request;
+package com.ac.announcement.dto;
 
 import java.util.UUID;
 import javax.validation.constraints.NotEmpty;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AnnouncementRequest {
+public class AnnouncementDto {
 
     private UUID id;
     @NotEmpty
