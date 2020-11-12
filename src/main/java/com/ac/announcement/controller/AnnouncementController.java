@@ -1,7 +1,6 @@
 package com.ac.announcement.controller;
 
 import com.ac.announcement.dto.AnnouncementDto;
-import com.ac.announcement.entity.AnnouncementEntity;
 import com.ac.announcement.service.AnnouncementService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -46,7 +45,7 @@ public class AnnouncementController {
         )
     })
     @PostMapping
-    public ResponseEntity<AnnouncementEntity> add(@RequestBody AnnouncementDto announcementDto) {
+    public ResponseEntity<AnnouncementDto> add(@RequestBody AnnouncementDto announcementDto) {
         return ResponseEntity.ok(announcementService.addNewAnnouncement(announcementDto));
     }
 
@@ -64,12 +63,12 @@ public class AnnouncementController {
         )
     })
     @GetMapping
-    public ResponseEntity<Iterable<AnnouncementEntity>> getAll() {
+    public ResponseEntity<Iterable<AnnouncementDto>> getAll() {
         return ResponseEntity.ok(announcementService.getAll());
     }
 
     @PutMapping
-    public ResponseEntity<AnnouncementEntity> update(@RequestBody AnnouncementDto announcementDto) {
+    public ResponseEntity<AnnouncementDto> update(@RequestBody AnnouncementDto announcementDto) {
         return ResponseEntity.ok(announcementService.update(announcementDto));
     }
 

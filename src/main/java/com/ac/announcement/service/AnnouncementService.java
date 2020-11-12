@@ -3,7 +3,10 @@ package com.ac.announcement.service;
 import com.ac.announcement.dto.AnnouncementDto;
 import com.ac.announcement.entity.AnnouncementEntity;
 import com.ac.announcement.repository.AnnouncementRepository;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,26 +18,28 @@ public class AnnouncementService {
 
     private final AnnouncementRepository announcementRepository;
 
-    public AnnouncementEntity addNewAnnouncement(AnnouncementDto announcementDto) {
+    public AnnouncementDto addNewAnnouncement(AnnouncementDto announcementDto) {
         //TODO upload pictures
         log.info("Adding a new announcement into database: Title {}, User email: {}, User name: {}",
             announcementDto.getTitle(), announcementDto.getEmail(), announcementDto.getAdvertiserName());
-        return announcementRepository.save(new AnnouncementEntity(announcementDto));
+        return announcementRepository.save(new AnnouncementEntity(announcementDto)).toDto();
     }
 
-    public Iterable<AnnouncementEntity> getAll() {
+    public List<AnnouncementDto> getAll() {
         log.info("Loading all announcements from database.");
-        return announcementRepository.findAll();
+
+        return StreamSupport.stream(announcementRepository.findAll().spliterator(), false)
+            .map(AnnouncementDto::new)
+            .collect(Collectors.toList());
     }
 
-    public AnnouncementEntity update(AnnouncementDto announcementDto) {
+    public AnnouncementDto update(AnnouncementDto announcementDto) {
         log.info("Loading announcement with following id from database: {}", announcementDto.getId());
-        Optional<AnnouncementEntity> announcementEntity = announcementRepository
-            .findById(announcementDto.getId());
+        Optional<AnnouncementEntity> announcementEntity = announcementRepository.findById(announcementDto.getId());
 
         if (!announcementEntity.isPresent()) {
             //TODO implement error handling
-            log.error("Announcement with following id doesn't exist in database: {}", announcementDto.getId());
+            log.error("Announcement with following id doesn't exists in database: {}", announcementDto.getId());
 
             //TODO throw exception instead of return null
             return null;
@@ -42,7 +47,7 @@ public class AnnouncementService {
 
         log.info("Update announcement with following id: {}", announcementDto.getId());
         announcementEntity.get().fromDto(announcementDto);
-        return announcementRepository.save(announcementEntity.get());
+        return announcementRepository.save(announcementEntity.get()).toDto();
     }
 
 }

@@ -19,7 +19,7 @@ public class CategoryService {
 
     public CategoryDto add(CategoryDto categoryDto) {
         CategoryEntity categoryEntity = new CategoryEntity(categoryDto);
-        return new CategoryDto(categoryRepository.save(categoryEntity));
+        return categoryRepository.save(categoryEntity).toDto();
     }
 
     public List<CategoryDto> getAll() {

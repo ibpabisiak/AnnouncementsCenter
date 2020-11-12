@@ -2,13 +2,14 @@ package com.ac.announcement.entity;
 
 import com.ac.announcement.dto.AnnouncementDto;
 import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.BeanUtils;
 
 @Entity
@@ -18,7 +19,9 @@ import org.springframework.beans.BeanUtils;
 public class AnnouncementEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
 
@@ -34,5 +37,9 @@ public class AnnouncementEntity {
 
     public void fromDto(AnnouncementDto announcementDto) {
         BeanUtils.copyProperties(announcementDto, this);
+    }
+
+    public AnnouncementDto toDto() {
+        return new AnnouncementDto(this);
     }
 }

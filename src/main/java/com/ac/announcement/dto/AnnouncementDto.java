@@ -1,25 +1,35 @@
 package com.ac.announcement.dto;
 
+import com.ac.announcement.entity.AnnouncementEntity;
 import java.util.UUID;
-import javax.validation.constraints.NotEmpty;
+import javax.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.BeanUtils;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class AnnouncementDto {
 
+    @Id
     private UUID id;
-    @NotEmpty
     private String title;
-    @NotEmpty
     private String description;
-    @NotEmpty
     private String advertiserName;
-    @NotEmpty
     private String phoneNumber;
-    @NotEmpty
     private String email;
+
+    public AnnouncementDto(AnnouncementEntity announcementEntity) {
+        fromEntity(announcementEntity);
+    }
+
+    public void fromEntity(AnnouncementEntity announcementEntity) {
+        BeanUtils.copyProperties(announcementEntity, this);
+    }
+
+    public AnnouncementEntity toEntity() {
+        return new AnnouncementEntity(this);
+    }
 }

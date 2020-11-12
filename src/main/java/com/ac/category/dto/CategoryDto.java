@@ -14,7 +14,7 @@ import org.springframework.beans.BeanUtils;
 public class CategoryDto {
 
     private UUID id;
-    private CategoryEntity categoryEntity;
+    private CategoryDto categoryDto;
     @NotEmpty
     private String title;
     @NotEmpty
@@ -27,5 +27,9 @@ public class CategoryDto {
 
     public void fromDto(CategoryEntity categoryEntity) {
         BeanUtils.copyProperties(categoryEntity, this);
+    }
+
+    public CategoryEntity toEntity() {
+        return new CategoryEntity(this);
     }
 }
