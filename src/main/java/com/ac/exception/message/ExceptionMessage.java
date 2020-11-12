@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum ExceptionMessage {
-    RESOURCE_NOT_FOUND("resource_not_found", "Announcement with following id doesn't exists in database: {0}");
+    RESOURCE_NOT_FOUND("resource_not_found", "Resource with following id doesn't exists in database: {0}");
 
     private final String errorCode;
     private final String message;
