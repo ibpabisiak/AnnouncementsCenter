@@ -3,6 +3,9 @@ package com.ac.announcement.service;
 import com.ac.announcement.dto.AnnouncementDto;
 import com.ac.announcement.entity.AnnouncementEntity;
 import com.ac.announcement.repository.AnnouncementRepository;
+import com.ac.exception.ResourceNotFoundException;
+import com.ac.exception.message.ExceptionMessage;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,11 +41,8 @@ public class AnnouncementService {
         Optional<AnnouncementEntity> announcementEntity = announcementRepository.findById(announcementDto.getId());
 
         if (!announcementEntity.isPresent()) {
-            //TODO implement error handling
-            log.error("Announcement with following id doesn't exists in database: {}", announcementDto.getId());
-
-            //TODO throw exception instead of return null
-            return null;
+            throw new ResourceNotFoundException(MessageFormat
+                .format(ExceptionMessage.RESOURCE_NOT_FOUND.getMessage(), announcementDto.getId()));
         }
 
         log.info("Update announcement with following id: {}", announcementDto.getId());
