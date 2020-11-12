@@ -1,5 +1,7 @@
 package com.ac.exception.message;
 
+import java.text.MessageFormat;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -10,4 +12,8 @@ public enum ExceptionMessage {
 
     private final String errorCode;
     private final String message;
+
+    public String formatWithId(UUID id) {
+        return MessageFormat.format(getMessage(), id);
+    }
 }
