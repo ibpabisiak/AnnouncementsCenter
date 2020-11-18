@@ -2,11 +2,13 @@ package com.ac.category.entity;
 
 import com.ac.category.dto.CategoryDto;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,10 +27,19 @@ public class CategoryEntity {
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @OneToOne
-    private CategoryEntity categoryEntity;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "id")
+    private CategoryEntity parent;
+
+    @Column(length = 50, nullable = false)
     private String title;
-    private String url;
+
+    @Column(length = 50, nullable = false)
+    private String urlName;
+
+    @Column(length = 50, nullable = false, unique = true)
+    private String urlPath;
+
     private String description;
 
     public CategoryEntity(CategoryDto categoryDto) {
@@ -36,6 +47,9 @@ public class CategoryEntity {
     }
 
     public void fromDto(CategoryDto categoryDto) {
+        if (categoryDto.getParentDto() != null) {
+            parent = categoryDto.getParentDto().toEntity();
+        }
         BeanUtils.copyProperties(categoryDto, this);
     }
 

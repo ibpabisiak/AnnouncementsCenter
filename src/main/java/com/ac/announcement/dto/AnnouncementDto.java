@@ -3,6 +3,7 @@ package com.ac.announcement.dto;
 import com.ac.announcement.entity.AnnouncementEntity;
 import java.util.UUID;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,8 @@ public class AnnouncementDto {
 
     @Id
     private UUID id;
+    @NotEmpty
+    private UUID categoryId;
     private String title;
     private String description;
     private String advertiserName;

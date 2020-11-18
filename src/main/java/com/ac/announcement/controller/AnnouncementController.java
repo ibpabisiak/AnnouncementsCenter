@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +47,7 @@ public class AnnouncementController {
     })
     @PostMapping
     public ResponseEntity<AnnouncementDto> add(@RequestBody AnnouncementDto announcementDto) {
-        return ResponseEntity.ok(announcementService.addNewAnnouncement(announcementDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(announcementService.addNewAnnouncement(announcementDto));
     }
 
     @Operation(summary = "Return all announcements in database")
@@ -69,7 +70,7 @@ public class AnnouncementController {
 
     @PutMapping
     public ResponseEntity<AnnouncementDto> update(@RequestBody AnnouncementDto announcementDto) {
-        return ResponseEntity.ok(announcementService.update(announcementDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(announcementService.update(announcementDto));
     }
 
 }

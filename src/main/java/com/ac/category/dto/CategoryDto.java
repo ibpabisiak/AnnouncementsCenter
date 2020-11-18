@@ -1,6 +1,7 @@
 package com.ac.category.dto;
 
 import com.ac.category.entity.CategoryEntity;
+import java.util.List;
 import java.util.UUID;
 import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -14,7 +15,9 @@ import org.springframework.beans.BeanUtils;
 public class CategoryDto {
 
     private UUID id;
-    private CategoryDto categoryDto;
+    private UUID parentId;
+    private CategoryDto parentDto;
+    private List<CategoryDto> categoryDtos;
     @NotEmpty
     private String title;
     @NotEmpty
@@ -26,6 +29,11 @@ public class CategoryDto {
     }
 
     public void fromDto(CategoryEntity categoryEntity) {
+        if (categoryEntity.getParent() != null) {
+            parentDto = new CategoryDto(categoryEntity.getParent());
+            parentId = parentDto.getId();
+        }
+
         BeanUtils.copyProperties(categoryEntity, this);
     }
 

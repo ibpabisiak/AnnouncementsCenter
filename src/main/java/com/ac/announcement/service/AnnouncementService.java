@@ -6,7 +6,7 @@ import com.ac.announcement.repository.AnnouncementRepository;
 import com.ac.exception.ResourceNotFoundException;
 import com.ac.exception.message.ExceptionMessage;
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import lombok.AllArgsConstructor;
@@ -37,16 +37,18 @@ public class AnnouncementService {
 
     public AnnouncementDto update(AnnouncementDto announcementDto) {
         log.info("Loading announcement with following id from database: {}", announcementDto.getId());
-        Optional<AnnouncementEntity> announcementEntity = announcementRepository.findById(announcementDto.getId());
-
-        if (!announcementEntity.isPresent()) {
-            throw new ResourceNotFoundException(
-                ExceptionMessage.RESOURCE_NOT_FOUND.formatWithId(announcementDto.getId()));
-        }
+        AnnouncementEntity announcementEntity = announcementRepository.findById(announcementDto.getId()).orElseThrow(
+            () -> new ResourceNotFoundException(
+                ExceptionMessage.RESOURCE_NOT_FOUND.formatWithId(announcementDto.getId().toString())));
 
         log.info("Update announcement with following id: {}", announcementDto.getId());
-        announcementEntity.get().fromDto(announcementDto);
-        return announcementRepository.save(announcementEntity.get()).toDto();
+        announcementEntity.fromDto(announcementDto);
+        return announcementRepository.save(announcementEntity).toDto();
+    }
+
+    public List<AnnouncementDto> getAnnouncementsByCategory(UUID categoryId) {
+        return announcementRepository.findByCategoryId(categoryId).stream().map(AnnouncementDto::new)
+            .collect(Collectors.toList());
     }
 
 }
