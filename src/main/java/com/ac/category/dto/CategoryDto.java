@@ -17,7 +17,7 @@ public class CategoryDto {
     private UUID id;
     private UUID parentId;
     private CategoryDto parentDto;
-    private List<CategoryDto> categoryDtos;
+    private List<CategoryDto> childrenDtos;
     @NotEmpty
     private String title;
     @NotEmpty

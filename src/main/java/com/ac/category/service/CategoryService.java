@@ -47,7 +47,7 @@ public class CategoryService {
         for (CategoryDto categoryDto : result) {
             List<CategoryDto> childrenDtos = categoryRepository.findAllByParentId(categoryDto.getId()).stream()
                 .map(CategoryDto::new).collect(Collectors.toList());
-            categoryDto.setCategoryDtos(childrenDtos);
+            categoryDto.setChildrenDtos(childrenDtos);
         }
 
         return result;
