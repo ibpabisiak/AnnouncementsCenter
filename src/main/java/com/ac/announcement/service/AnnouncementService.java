@@ -8,7 +8,6 @@ import com.ac.exception.message.ExceptionMessage;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,7 +29,7 @@ public class AnnouncementService {
     public List<AnnouncementDto> getAll() {
         log.info("Loading all announcements from database.");
 
-        return StreamSupport.stream(announcementRepository.findAll().spliterator(), false)
+        return announcementRepository.findAll().stream()
             .map(AnnouncementDto::new)
             .collect(Collectors.toList());
     }
