@@ -4,13 +4,11 @@ import com.ac.category.entity.CategoryEntity;
 import java.util.List;
 import java.util.UUID;
 import javax.validation.constraints.NotEmpty;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class CategoryDto {
 

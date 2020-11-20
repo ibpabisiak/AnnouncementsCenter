@@ -4,13 +4,11 @@ import com.ac.announcement.entity.AnnouncementEntity;
 import java.util.UUID;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class AnnouncementDto {
 
