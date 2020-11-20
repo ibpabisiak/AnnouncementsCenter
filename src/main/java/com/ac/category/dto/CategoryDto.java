@@ -19,7 +19,8 @@ public class CategoryDto {
     @NotEmpty
     private String title;
     @NotEmpty
-    private String url;
+    private String urlTitle;
+    private String urlPath;
     private String description;
 
     public CategoryDto(CategoryEntity categoryEntity) {
