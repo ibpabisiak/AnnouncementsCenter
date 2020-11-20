@@ -46,8 +46,9 @@ public class AnnouncementService {
     }
 
     public List<AnnouncementDto> getAnnouncementsByCategory(UUID categoryId) {
-        return announcementRepository.findAllByCategoryId(categoryId).stream().map(AnnouncementDto::new)
-            .collect(Collectors.toList());
+        return announcementRepository.findAllByCategoryId(categoryId)
+            .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessage.RESOURCE_NOT_FOUND.getMessage())).stream()
+            .map(AnnouncementDto::new).collect(Collectors.toList());
     }
 
 }
