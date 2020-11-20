@@ -76,13 +76,15 @@ public class CategoryService {
     }
 
     public List<CategoryDto> getCategoryTree(UUID rootId) {
-        List<CategoryDto> result = categoryRepository.findAllByParentId(rootId).stream().map(CategoryDto::new).collect(
-            Collectors.toList());
+        List<CategoryDto> result = categoryRepository.findAllByParentId(rootId)
+            .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessage.BAD_CATEGORY_URL.getMessage())).stream()
+            .map(CategoryDto::new).collect(Collectors.toList());
 
         for (CategoryDto categoryDto : result) {
-            List<CategoryDto> childrenDtos = categoryRepository.findAllByParentId(categoryDto.getId()).stream()
-                .map(CategoryDto::new).collect(Collectors.toList());
-            categoryDto.setChildrenDtos(childrenDtos);
+            List<CategoryDto> categoryDtos = categoryRepository.findAllByParentId(categoryDto.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessage.RESOURCE_NOT_FOUND.getMessage()))
+                .stream().map(CategoryDto::new).collect(Collectors.toList());
+            categoryDto.setChildrenDtos(categoryDtos);
         }
 
         return result;
@@ -90,7 +92,7 @@ public class CategoryService {
 
     public List<AnnouncementDto> getAnnouncementsByCategory(HttpServletRequest request) {
         String urlPath = extractCategoryUrlPath(request);
-        CategoryEntity categoryEntity = Optional.ofNullable(categoryRepository.findByUrlPath(urlPath)).orElseThrow(
+        CategoryEntity categoryEntity = categoryRepository.findByUrlPath(urlPath).orElseThrow(
             () -> new ResourceNotFoundException(
                 ExceptionMessage.BAD_CATEGORY_URL.formatWithId(request.getRequestURI())));
         return announcementService.getAnnouncementsByCategory(categoryEntity.getId());
