@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AnnouncementRepository extends JpaRepository<AnnouncementEntity, UUID> {
 
-    List<AnnouncementEntity> findByCategoryId(UUID categoryId);
+    List<AnnouncementEntity> findAllByCategoryId(UUID categoryId);
 }

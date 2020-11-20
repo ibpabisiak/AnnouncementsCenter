@@ -46,7 +46,7 @@ public class AnnouncementService {
     }
 
     public List<AnnouncementDto> getAnnouncementsByCategory(UUID categoryId) {
-        return announcementRepository.findByCategoryId(categoryId).stream().map(AnnouncementDto::new)
+        return announcementRepository.findAllByCategoryId(categoryId).stream().map(AnnouncementDto::new)
             .collect(Collectors.toList());
     }
 

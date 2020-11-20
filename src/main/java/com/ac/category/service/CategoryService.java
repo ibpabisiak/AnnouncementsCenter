@@ -34,12 +34,12 @@ public class CategoryService {
             categoryDto.setParentDto(parentEntity.toDto());
         }
 
-        prepareCategoryUrlPath(categoryDto);
+        buildCategoryUrlPath(categoryDto);
 
         return categoryRepository.save(new CategoryEntity(categoryDto)).toDto();
     }
 
-    private void prepareCategoryUrlPath(CategoryDto categoryDto) {
+    private void buildCategoryUrlPath(CategoryDto categoryDto) {
         if (categoryDto != null) {
             List<CategoryDto> categoryDtos = new ArrayList<>();
             CategoryDto currentCategoryDto = categoryDto;
