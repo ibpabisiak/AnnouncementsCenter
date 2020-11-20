@@ -3,6 +3,7 @@ package com.ac.category.controller;
 import com.ac.announcement.dto.AnnouncementDto;
 import com.ac.category.dto.CategoryDto;
 import com.ac.category.service.CategoryService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Tag(name = "Categories Controller")
 @RequestMapping("/category")
 @AllArgsConstructor
 @Slf4j

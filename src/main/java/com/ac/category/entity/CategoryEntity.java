@@ -32,10 +32,9 @@ public class CategoryEntity {
     @Column(length = 50, nullable = false)
     private String title;
 
-    @Column(length = 50, nullable = false)
-    private String urlName;
-
     @Column(length = 50, nullable = false, unique = true)
+    private String urlTitle;
+
     private String urlPath;
 
     private String description;

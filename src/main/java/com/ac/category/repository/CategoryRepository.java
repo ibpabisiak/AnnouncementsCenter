@@ -11,6 +11,4 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, UUID> 
 
     CategoryEntity findByUrlPath(String urlPath);
 
-    //TODO
-    boolean existsByUrl(String url);
 }

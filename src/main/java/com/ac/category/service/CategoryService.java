@@ -7,7 +7,9 @@ import com.ac.category.entity.CategoryEntity;
 import com.ac.category.repository.CategoryRepository;
 import com.ac.exception.ResourceNotFoundException;
 import com.ac.exception.message.ExceptionMessage;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -32,7 +34,40 @@ public class CategoryService {
             categoryDto.setParentDto(parentEntity.toDto());
         }
 
+        prepareCategoryUrlPath(categoryDto);
+
         return categoryRepository.save(new CategoryEntity(categoryDto)).toDto();
+    }
+
+    private void prepareCategoryUrlPath(CategoryDto categoryDto) {
+        if (categoryDto != null) {
+            List<CategoryDto> categoryDtos = new ArrayList<>();
+            CategoryDto currentCategoryDto = categoryDto;
+
+            while (currentCategoryDto != null) {
+                categoryDtos.add(currentCategoryDto);
+
+                if (currentCategoryDto.getParentId() == null) {
+                    currentCategoryDto = null;
+                } else {
+                    Optional<CategoryEntity> categoryEntity = categoryRepository
+                        .findById(currentCategoryDto.getParentId());
+                    if (categoryEntity.isPresent()) {
+                        currentCategoryDto = categoryEntity.get().toDto();
+                    } else {
+                        currentCategoryDto = null;
+                    }
+                }
+            }
+
+            StringBuilder stringBuilder = new StringBuilder();
+            ListIterator<CategoryDto> listIterator = categoryDtos.listIterator(categoryDtos.size());
+            while (listIterator.hasPrevious()) {
+                stringBuilder.append(listIterator.previous().getUrlTitle() + "/");
+            }
+            categoryDto.setUrlPath(stringBuilder.toString());
+
+        }
     }
 
     public List<CategoryDto> getAll() {

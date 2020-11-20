@@ -28,6 +28,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<Object> handleResourceNotFoundException(Exception ex, WebRequest webRequest) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(Instant.now(), ex.getMessage(),
             webRequest.getDescription(false));
+        ex.printStackTrace();
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
