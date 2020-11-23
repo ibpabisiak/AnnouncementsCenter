@@ -1,6 +1,7 @@
 package com.ac.announcement.dto;
 
 import com.ac.announcement.entity.AnnouncementEntity;
+import com.ac.category.dto.CategoryDto;
 import java.util.UUID;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
@@ -16,9 +17,13 @@ public class AnnouncementDto {
     private UUID id;
     @NotEmpty
     private UUID categoryId;
+
+    private CategoryDto categoryDto;
     private String title;
+    private String urlTitle;
+    private String urlPath;
     private String description;
-    private String advertiserName;
+    private String ownerName;
     private String phoneNumber;
     private String email;
 

@@ -90,6 +90,12 @@ public class CategoryService {
         return result;
     }
 
+    public CategoryEntity getEntityById(UUID id) {
+        return categoryRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessage.RESOURCE_NOT_FOUND
+                .getMessage()));
+    }
+
     public List<AnnouncementDto> getAnnouncementsByCategory(HttpServletRequest request) {
         String urlPath = extractCategoryUrlPath(request);
         CategoryEntity categoryEntity = categoryRepository.findByUrlPath(urlPath).orElseThrow(

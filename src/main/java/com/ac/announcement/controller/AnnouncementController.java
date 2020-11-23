@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -68,6 +69,29 @@ public class AnnouncementController {
     @GetMapping
     public ResponseEntity<Iterable<AnnouncementDto>> getAll() {
         return ResponseEntity.ok(announcementService.getAll());
+    }
+
+    @Operation(summary = "Return concrete announcement by urlPath")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Return concrete announcement by urlPath",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Announcement not found",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Unknown error",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
+        )
+    })
+    @GetMapping("/{urlPath}")
+    public ResponseEntity<AnnouncementDto> getAnnouncement(@PathVariable String urlPath) {
+        return ResponseEntity.ok(announcementService.getAnnouncement(urlPath));
     }
 
     @PutMapping

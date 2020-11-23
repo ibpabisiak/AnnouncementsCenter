@@ -3,6 +3,7 @@ package com.ac.announcement.service;
 import com.ac.announcement.dto.AnnouncementDto;
 import com.ac.announcement.entity.AnnouncementEntity;
 import com.ac.announcement.repository.AnnouncementRepository;
+import com.ac.category.service.CategoryService;
 import com.ac.exception.ResourceNotFoundException;
 import com.ac.exception.message.ExceptionMessage;
 import java.util.List;
@@ -18,11 +19,16 @@ import org.springframework.stereotype.Service;
 public class AnnouncementService {
 
     private final AnnouncementRepository announcementRepository;
+    private final CategoryService categoryService;
 
     public AnnouncementDto addNewAnnouncement(AnnouncementDto announcementDto) {
         //TODO upload pictures
+
+        log.info("Loading category data by id.");
+        announcementDto.setCategoryDto(categoryService.getEntityById(announcementDto.getCategoryId()).toDto());
+
         log.info("Adding a new announcement into database: Title {}, User email: {}, User name: {}",
-            announcementDto.getTitle(), announcementDto.getEmail(), announcementDto.getAdvertiserName());
+            announcementDto.getTitle(), announcementDto.getEmail(), announcementDto.getOwnerName());
         return announcementRepository.save(new AnnouncementEntity(announcementDto)).toDto();
     }
 
@@ -49,6 +55,11 @@ public class AnnouncementService {
         return announcementRepository.findAllByCategoryId(categoryId)
             .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessage.RESOURCE_NOT_FOUND.getMessage())).stream()
             .map(AnnouncementDto::new).collect(Collectors.toList());
+    }
+
+    public AnnouncementDto getAnnouncement(String urlPath) {
+        return announcementRepository.findByUrlPath(urlPath)
+            .orElseThrow(() -> new ResourceNotFoundException(ExceptionMessage.RESOURCE_NOT_FOUND.getMessage())).toDto();
     }
 
 }

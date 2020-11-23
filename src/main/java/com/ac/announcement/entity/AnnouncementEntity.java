@@ -28,22 +28,25 @@ public class AnnouncementEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "id")
-    private CategoryEntity category;
+    private CategoryEntity categoryEntity;
 
     private String title;
+    private String urlTitle;
+    private String urlPath;
     private String description;
-    private String advertiserName;
+    private String ownerName;
     private String phoneNumber;
     private String email;
-
-    @ManyToOne
-    private CategoryEntity categoryEntity;
 
     public AnnouncementEntity(AnnouncementDto announcementDto) {
         fromDto(announcementDto);
     }
 
     public void fromDto(AnnouncementDto announcementDto) {
+        if (announcementDto.getCategoryDto() != null) {
+            categoryEntity = new CategoryEntity(announcementDto.getCategoryDto());
+        }
+
         BeanUtils.copyProperties(announcementDto, this);
     }
 
